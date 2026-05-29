@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IVYBEK Admission Program 2026 — Top-50 universitetlarga grant bilan</title>
+<!-- preconnect: opens the connection before the browser needs it -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- load fonts async: media=print trick means non-blocking, flips to all once loaded -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,700;0,800;1,800&family=Manrope:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,700;0,800;1,800&family=Manrope:wght@400;500;600;700;800&display=swap"></noscript>
+<style>
+
+  :root{
+    --bg:#EEF0F4; --surface:#FFFFFF; --ink:#0E1B2E; --muted:#6B7384;
+    --line:#DCE6FA; --blue:#2E7DF7; --blue-deep:#1655C8; --blue-soft:#EAF2FF;
+    --navy:#0E2350; --shadow:0 14px 30px -16px rgba(20,60,140,.45);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#cfd4dd;font-family:'Manrope',-apple-system,system-ui,sans-serif;color:var(--ink);
+    display:flex;justify-content:center;padding:24px 12px;-webkit-font-smoothing:antialiased;}
+  .page{width:100%;max-width:412px;background:var(--bg);border-radius:26px;overflow:hidden;
+    box-shadow:0 30px 70px -30px rgba(10,25,55,.5);}
+
+  /* reveal-on-scroll */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  /* HERO */
+  .hero{position:relative;overflow:hidden;background:radial-gradient(120% 130% at 85% -10%,#23407a,#13294f 55%,#0c1d3d);
+    color:#fff;padding:38px 22px 30px;text-align:center;}
+  .hero::after{content:"";position:absolute;top:-130px;right:-100px;width:360px;height:360px;border-radius:50%;
+    background:radial-gradient(circle,rgba(46,125,247,.4),transparent 62%);pointer-events:none;}
+  .hero > *{position:relative;z-index:2;}
+  .eyebrow{display:inline-block;background:rgba(46,125,247,.18);color:#cfe0ff;font-weight:800;font-size:11.5px;
+    letter-spacing:.18em;text-transform:uppercase;padding:7px 14px;border-radius:999px;margin-bottom:18px;
+    border:1px solid rgba(120,170,255,.3);}
+  .headline{font-family:'Archivo',sans-serif;font-style:italic;font-weight:800;text-transform:uppercase;
+    font-size:26px;line-height:1.12;letter-spacing:-.01em;}
+  .headline .hl{color:#5EA0FF;}
+  .subhead{color:rgba(255,255,255,.8);font-size:14.5px;line-height:1.55;font-weight:500;margin:16px auto 0;max-width:340px;}
+
+  /* hero stats */
+  .stats{display:flex;justify-content:center;gap:10px;margin-top:26px;}
+  .stat{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(120,170,255,.22);border-radius:14px;
+    padding:14px 8px;}
+  .stat .n{font-family:'Archivo',sans-serif;font-weight:800;font-size:22px;color:#5EA0FF;line-height:1;}
+  .stat .l{display:block;font-size:10.5px;color:rgba(255,255,255,.7);margin-top:6px;line-height:1.3;letter-spacing:.01em;}
+
+  /* CTA */
+  .cta{display:block;width:calc(100% - 40px);margin:24px auto 0;border:none;cursor:pointer;text-decoration:none;
+    text-align:center;background:linear-gradient(180deg,#3C8BFF,#1E5FD8);color:#fff;font-family:'Manrope',sans-serif;
+    font-weight:800;font-size:16px;letter-spacing:.02em;text-transform:uppercase;padding:18px 20px;border-radius:16px;
+    box-shadow:0 12px 24px -10px rgba(30,95,216,.7), inset 0 1px 0 rgba(255,255,255,.35);
+    transition:transform .15s ease, box-shadow .2s ease;}
+  .cta:hover{transform:translateY(-2px);box-shadow:0 18px 30px -12px rgba(30,95,216,.85), inset 0 1px 0 rgba(255,255,255,.4);}
+  .cta:active{transform:translateY(0);}
+  .cta .arrows{opacity:.85;margin-left:4px;}
+  .hero .cta{width:100%;margin-top:26px;}
+
+  /* PROOF band */
+  .proof{background:var(--surface);border-bottom:1px solid var(--line);padding:24px 22px;text-align:center;}
+  .proof .kick{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue-deep);font-weight:800;margin-bottom:14px;}
+  .proof .unis{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 12px;}
+  .proof .unis span{font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;color:var(--navy);}
+  .proof .unis .dot{color:var(--blue);font-weight:800;}
+
+  /* SECTION heading */
+  .section-title{font-family:'Archivo',sans-serif;font-weight:800;text-transform:uppercase;text-align:center;
+    font-size:21px;letter-spacing:.01em;margin:34px 22px 4px;line-height:1.18;}
+  .section-title .hl{color:var(--blue);}
+
+  /* program */
+  .badge{display:flex;justify-content:center;margin:18px 0 0;}
+  .badge span{background:var(--navy);color:#fff;font-family:'Archivo',sans-serif;font-weight:800;font-size:12.5px;
+    letter-spacing:.06em;text-transform:uppercase;padding:9px 18px;border-radius:999px;}
+  .incl{margin:18px 20px 0;background:var(--surface);border:1.5px solid var(--line);border-radius:18px;
+    padding:20px 20px;box-shadow:var(--shadow);}
+  .incl li{list-style:none;display:flex;align-items:flex-start;gap:12px;font-size:14.5px;font-weight:600;
+    line-height:1.45;padding:10px 0;border-bottom:1px solid #EEF2FA;}
+  .incl li:last-child{border-bottom:none;}
+  .incl .tick{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;
+    display:grid;place-items:center;font-weight:800;font-size:13px;margin-top:1px;}
+
+  /* testimonial */
+  .testi{margin:30px 20px 0;background:var(--surface);border:1.5px solid var(--line);border-radius:18px;
+    padding:24px 22px 22px;box-shadow:var(--shadow);}
+  .testi .qicon{width:30px;height:30px;color:var(--blue);opacity:.9;margin-bottom:4px;}
+  .testi p{font-size:14.5px;line-height:1.6;color:var(--ink);margin:4px 0 18px;font-weight:500;}
+  .testi .person{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid #EEF2FA;}
+  .testi .avatar{width:46px;height:46px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;
+    background:linear-gradient(180deg,#3C8BFF,#1E5FD8);color:#fff;font-family:'Archivo',sans-serif;font-weight:800;font-size:18px;}
+  .testi .meta b{display:block;font-size:15px;color:var(--ink);}
+  .testi .meta span{font-size:13px;font-weight:700;color:var(--blue-deep);}
+
+  /* FINAL */
+  .final{margin:40px 0 0;background:linear-gradient(180deg,#13346F,#0E2350);color:#fff;padding:38px 24px 30px;text-align:center;}
+  .final h2{font-family:'Archivo',sans-serif;font-style:italic;font-weight:800;text-transform:uppercase;font-size:23px;margin-bottom:12px;}
+  .final p{color:rgba(255,255,255,.78);font-size:15px;line-height:1.55;max-width:330px;margin:0 auto 4px;}
+  .footnote{text-align:center;font-style:italic;font-weight:700;color:#fff;font-size:14.5px;margin-top:20px;}
+
+  /* MODAL */
+  .overlay{position:fixed;inset:0;background:rgba(8,18,40,.6);backdrop-filter:blur(3px);display:flex;align-items:center;
+    justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s ease;z-index:100;}
+  .overlay.open{opacity:1;visibility:visible;}
+  .modal{width:100%;max-width:380px;background:#fff;border-radius:22px;padding:30px 26px 28px;position:relative;
+    box-shadow:0 40px 80px -20px rgba(8,18,40,.6);transform:translateY(14px) scale(.98);transition:transform .22s ease;
+    max-height:92vh;overflow-y:auto;}
+  .overlay.open .modal{transform:translateY(0) scale(1);}
+  .modal-close{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;border:none;background:#F0F2F6;
+    color:#5b6373;font-size:18px;cursor:pointer;display:grid;place-items:center;transition:background .15s;}
+  .modal-close:hover{background:#E2E6EE;}
+  .modal h3{font-family:'Archivo',sans-serif;font-weight:800;font-size:21px;margin-bottom:8px;}
+  .modal .modal-sub{color:var(--muted);font-size:14.5px;line-height:1.5;margin-bottom:22px;}
+  .modal-field{margin-bottom:16px;}
+  .modal label{display:block;font-size:13.5px;font-weight:700;margin-bottom:8px;}
+  .modal input,.modal select{width:100%;font-family:inherit;font-size:16px;color:var(--ink);background:#F6F8FC;
+    border:1.5px solid var(--line);border-radius:12px;padding:14px 15px;transition:border .15s,box-shadow .15s;}
+  .modal input:focus,.modal select:focus{outline:none;border-color:var(--blue);background:#fff;box-shadow:0 0 0 4px rgba(46,125,247,.12);}
+  .modal [aria-invalid="true"]{border-color:#c0392b;box-shadow:0 0 0 4px rgba(192,57,43,.1);}
+  .phone-group{display:flex;align-items:stretch;}
+  .phone-prefix{display:flex;align-items:center;padding:0 14px;background:#E8EFFB;border:1.5px solid var(--line);
+    border-right:none;border-radius:12px 0 0 12px;font-weight:800;color:var(--ink);font-size:16px;}
+  .phone-group input{border-radius:0 12px 12px 0;}
+  .select-wrap{position:relative;}
+  .modal select{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:40px;}
+  .select-wrap::after{content:"▾";position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--blue);pointer-events:none;font-size:13px;}
+  .field-error{color:#c0392b;font-size:13px;font-weight:600;margin-top:7px;display:none;}
+  .field-error.show{display:block;}
+  .modal .cta{width:100%;margin:20px 0 0;}
+  .modal-success{text-align:center;display:none;}
+  .modal-success.show{display:block;}
+  .modal-success .seal{width:64px;height:64px;border-radius:50%;margin:6px auto 16px;display:grid;place-items:center;
+    background:linear-gradient(180deg,#3C8BFF,#1E5FD8);color:#fff;font-size:30px;box-shadow:0 12px 26px -10px rgba(30,95,216,.7);}
+  .modal-success h3{margin-bottom:10px;}
+  .modal-success p{color:var(--muted);font-size:15px;line-height:1.55;}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}.reveal{opacity:1;transform:none;}}
+</style>
+</head>
+<body>
+  <main class="page">
+
+    <!-- HERO -->
+    <section class="hero">
+      <span class="eyebrow">Admission Program · 2026</span>
+      <h1 class="headline">Top-50 universitetlarga <span class="hl">100% grant</span> bilan kiring</h1>
+      <p class="subhead">Markaziy Osiyoning yetakchi qabul dasturi. 4 oyda hujjatdan to grantgacha — sizni MIT, Harvard va Columbia darajasidagi universitetlarga tayyorlaymiz.</p>
+
+      <div class="stats">
+        <div class="stat"><span class="n">$16M+</span><span class="l">Yutilgan grantlar</span></div>
+        <div class="stat"><span class="n">55+</span><span class="l">2026 Top-50 qabullar</span></div>
+        <div class="stat"><span class="n">$385K</span><span class="l">Eng katta yakka grant</span></div>
+      </div>
+
+      <button class="cta js-open">Ariza qoldirish <span class="arrows">&gt;&gt;&gt;</span></button>
+    </section>
+
+    <!-- PROOF -->
+    <div class="proof reveal">
+      <p class="kick">O'quvchilarimiz qayerda o'qiydi</p>
+      <div class="unis">
+        <span>MIT</span><span class="dot">·</span><span>Harvard</span><span class="dot">·</span>
+        <span>Columbia</span><span class="dot">·</span><span>Amherst</span><span class="dot">·</span>
+        <span>Imperial</span><span class="dot">·</span><span>CMU</span><span class="dot">·</span>
+        <span>Georgetown&nbsp;Q</span><span class="dot">·</span><span>HKUST</span>
+      </div>
+    </div>
+
+    <!-- PROGRAM -->
+    <h2 class="section-title reveal">Dasturda <span class="hl">nima bor</span></h2>
+    <div class="badge reveal"><span>4 oy · atigi 20 ta o'rin</span></div>
+    <ul class="incl reveal">
+      <li><span class="tick">✓</span> 50+ soat jonli seminar va sessiyalar</li>
+      <li><span class="tick">✓</span> 20+ soat esse va narrativ yozish darslari</li>
+      <li><span class="tick">✓</span> 16+ strateglar bilan shaxsiy konsultatsiya</li>
+      <li><span class="tick">✓</span> 7000+ so'z yozma feedback</li>
+      <li><span class="tick">✓</span> Research, internship va summer dasturlariga tayyorgarlik</li>
+      <li><span class="tick">✓</span> Universitet suhbati va moliyaviy yordam (financial aid) prep</li>
+      <li><span class="tick">✓</span> IVYBEK alumni networkiga kirish</li>
+    </ul>
+
+
+
+    <!-- FINAL -->
+    <section class="final reveal">
+      <h2>Atigi 20 ta o'rin bor</h2>
+      <p>2026 jamoasiga qo'shiling va Top-50 sari yo'lingizni boshlang. Ariza qoldiring — jamoamiz siz bilan bog'lanadi.</p>
+      <button class="cta js-open">Ariza qoldirish <span class="arrows">&gt;&gt;&gt;</span></button>
+      <p class="footnote">O'rinlar cheklangan — shoshiling!</p>
+    </section>
+
+  </main>
+
+  <!-- ===== ARIZA FORMASI ===== -->
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <button class="modal-close" id="modalClose" aria-label="Yopish">&times;</button>
+
+      <div id="formView">
+        <h3 id="modalTitle">Ariza qoldiring</h3>
+        <p class="modal-sub">Ma'lumotlaringizni qoldiring — jamoamiz tez orada siz bilan bog'lanadi.</p>
+
+        <div class="modal-field">
+          <label for="name">Ism</label>
+          <input id="name" type="text" autocomplete="name" placeholder="Ismingiz" />
+          <p class="field-error" id="nameError">Iltimos, ismingizni kiriting.</p>
+        </div>
+
+        <div class="modal-field">
+          <label for="phone">Telefon raqam</label>
+          <div class="phone-group">
+            <span class="phone-prefix">+998</span>
+            <input id="phone" type="tel" inputmode="numeric" maxlength="12" placeholder="90 123 45 67" />
+          </div>
+          <p class="field-error" id="phoneError">Iltimos, 9 xonali raqam kiriting (masalan 90 123 45 67).</p>
+        </div>
+
+        <div class="modal-field">
+          <label for="ielts">IELTS darajangiz</label>
+          <div class="select-wrap">
+            <select id="ielts">
+              <option value="" disabled selected>Tanlang</option>
+              <option>Hali topshirmaganman</option>
+              <option>5.5 va past</option>
+              <option>6.0 – 6.5</option>
+              <option>7.0 – 7.5</option>
+              <option>8.0 va yuqori</option>
+            </select>
+          </div>
+          <p class="field-error" id="ieltsError">Iltimos, darajani tanlang.</p>
+        </div>
+
+        <button class="cta" id="formSubmit">Ariza yuborish</button>
+      </div>
+
+      <div class="modal-success" id="successView">
+        <div class="seal">✓</div>
+        <h3>Qabul qilindi!</h3>
+        <p>Rahmat! Tez orada jamoamiz siz bilan bog'lanadi.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const overlay=document.getElementById('overlay'),closeBtn=document.getElementById('modalClose'),
+      nameIn=document.getElementById('name'),phoneIn=document.getElementById('phone'),
+      ieltsIn=document.getElementById('ielts'),submitBtn=document.getElementById('formSubmit'),
+      formView=document.getElementById('formView'),successV=document.getElementById('successView');
+
+    function openModal(){overlay.classList.add('open');document.body.style.overflow='hidden';
+      formView.style.display='block';successV.classList.remove('show');setTimeout(()=>nameIn.focus(),150);}
+    function closeModal(){overlay.classList.remove('open');document.body.style.overflow='';}
+
+    document.querySelectorAll('.js-open').forEach(b=>b.addEventListener('click',openModal));
+    closeBtn.addEventListener('click',closeModal);
+    overlay.addEventListener('click',e=>{if(e.target===overlay)closeModal();});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay.classList.contains('open'))closeModal();});
+
+    phoneIn.addEventListener('input',()=>{
+      let d=phoneIn.value.replace(/\D/g,'').slice(0,9),out=d;
+      if(d.length>2)out=d.slice(0,2)+' '+d.slice(2);
+      if(d.length>5)out=d.slice(0,2)+' '+d.slice(2,5)+' '+d.slice(5);
+      if(d.length>7)out=d.slice(0,2)+' '+d.slice(2,5)+' '+d.slice(5,7)+' '+d.slice(7);
+      phoneIn.value=out;clearErr(phoneIn,'phoneError');
+    });
+    nameIn.addEventListener('input',()=>clearErr(nameIn,'nameError'));
+    ieltsIn.addEventListener('change',()=>clearErr(ieltsIn,'ieltsError'));
+
+    function clearErr(el,id){el.setAttribute('aria-invalid','false');document.getElementById(id).classList.remove('show');}
+    function setErr(el,id){el.setAttribute('aria-invalid','true');document.getElementById(id).classList.add('show');}
+
+    submitBtn.addEventListener('click',()=>{
+      let ok=true;
+      if(!nameIn.value.trim()){setErr(nameIn,'nameError');ok=false;}
+      const digits=phoneIn.value.replace(/\D/g,'');
+      if(digits.length!==9){setErr(phoneIn,'phoneError');ok=false;}
+      if(!ieltsIn.value){setErr(ieltsIn,'ieltsError');ok=false;}
+      if(!ok)return;
+
+      const lead={name:nameIn.value.trim(),phone:'+998'+digits,ielts:ieltsIn.value};
+
+      // ===== BU YERGA BACKEND / TELEGRAM / GOOGLE FORM ULANG =====
+      // lead = { name, phone (+998 bilan), ielts }
+      // fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(lead)});
+      // ===========================================================
+
+      formView.style.display='none';successV.classList.add('show');
+    });
+
+    // reveal-on-scroll
+    const io=new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+    },{threshold:.15});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  </script>
+</body>
+</html>
