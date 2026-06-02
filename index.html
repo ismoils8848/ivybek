@@ -315,34 +315,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       // lead = { name, phone (+998 bilan), ielts }
       // fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(lead)});
       // ===========================================================
-function doPost(e) {
+fetch(
+'https://script.google.com/macros/s/AKfycbxazCQHvdUGfYQuIZbDuYZG40isqAVyCxqDkcINRt4Tt66OmGYaEEyyK-3XXYIBR81nEQ/exec',
+{
+method:'POST',
+mode:'no-cors',
+headers:{
+'Content-Type':'application/json'
+},
+body:JSON.stringify(lead)
+});
 
-const sheet = SpreadsheetApp
-.openById('1F453aUTVhtghGxl7ZYt7aWZ-KXOydyQ7v5SVTKwgfPA')
-.getSheetByName('Лист1');
+tgp('event','4HGABMb6-Ix8DtlHR');
 
-const data = JSON.parse(e.postData.contents);
-
-sheet.appendRow([
-data.name || '',
-data.phone || '',
-data.ielts || '',
-new Date()
-]);
-
-return ContentService
-.createTextOutput(
-JSON.stringify({
-result:'success'
-})
-)
-.setMimeType(
-ContentService.MimeType.JSON
-);
-
-}
-
-
+formView.style.display='none';
+successV.classList.add('show');
 
 
      
