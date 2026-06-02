@@ -315,7 +315,57 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       // ===== BU YERGA BACKEND / TELEGRAM / GOOGLE FORM ULANG =====
 
+if(localStorage.getItem('ivybekLeadSent')){
+alert('Siz allaqachon ariza yuborgansiz.');
+return;
+}
 
+submitBtn.disabled=true;
+
+const message =
+`🔥 NEW LEAD
+
+👤 Name: ${lead.name}
+
+📞 Phone: ${lead.phone}
+
+🎯 IELTS: ${lead.ielts}`;
+
+fetch(
+'https://api.telegram.org/bot8958943526:AAEDTYPdX9fshchy0hkMQ0yQwmBXS5k5gUM/sendMessage',
+{
+method:'POST',
+headers:{
+'Content-Type':'application/json'
+},
+body:JSON.stringify({
+chat_id:'1373142208',
+text:message
+})
+}
+)
+.then(()=>{
+
+localStorage.setItem(
+'ivybekLeadSent',
+'true'
+);
+
+tgp('event','4HGABMb6-Ix8DtlHR');
+
+formView.style.display='none';
+successV.classList.add('show');
+
+})
+.catch(err=>{
+
+console.error(err);
+
+submitBtn.disabled=false;
+
+alert('Xatolik yuz berdi');
+
+});
       // lead = { name, phone (+998 bilan), ielts }
       // fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(lead)});
       // ===========================================================
