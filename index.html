@@ -314,43 +314,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
      
 
       // ===== BU YERGA BACKEND / TELEGRAM / GOOGLE FORM ULANG =====
-const BOT_TOKEN =
-'8958943526:AAEDTYPdX9fshchy0hkMQ0yQwmBXS5k5gUM';
 
-const CHAT_ID =
-'1373142208';
-
-const message =
-`🔥 NEW LEAD
-
-👤 Name: ${lead.name}
-
-📞 Phone: ${lead.phone}
-
-🎯 IELTS: ${lead.ielts}`;
-
-fetch(
-`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
-{
-method:'POST',
-headers:{
-'Content-Type':'application/json'
-},
-body:JSON.stringify({
-chat_id:CHAT_ID,
-text:message
-})
-}
-)
-.then(()=>{
-
-tgp('event','4HGABMb6-Ix8DtlHR');
-
-formView.style.display='none';
-successV.classList.add('show');
-
-})
-.catch(console.error);
 
      
       // lead = { name, phone (+998 bilan), ielts }
