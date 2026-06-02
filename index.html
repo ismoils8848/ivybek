@@ -315,31 +315,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       // lead = { name, phone (+998 bilan), ielts }
       // fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(lead)});
       // ===========================================================
-fetch(
-'https://script.google.com/macros/s/AKfycbzLJtNMq1d1otPNJOzgGBl7LIqRFs88wHl-2L9BswdcpMrVBrbxkUY5_2FtIDY4u05TuQ/exec',
-{
-method:'POST',
-headers:{
-'Content-Type':'application/json'
-},
-body:JSON.stringify(lead)
+function doPost(e) {
+
+const sheet = SpreadsheetApp
+.openById('1F453aUTVhtghGxl7ZYt7aWZ-KXOydyQ7v5SVTKwgfPA')
+.getSheetByName('Лист1');
+
+const data = JSON.parse(e.postData.contents);
+
+sheet.appendRow([
+data.name || '',
+data.phone || '',
+data.ielts || '',
+new Date()
+]);
+
+return ContentService
+.createTextOutput(
+JSON.stringify({
+result:'success'
 })
-.then(()=>{
+)
+.setMimeType(
+ContentService.MimeType.JSON
+);
 
-tgp('event','4HGABMb6-Ix8DtlHR');
-
-formView.style.display='none';
-successV.classList.add('show');
-
-})
-.catch(err=>{
-
-console.error(err);
-
-alert('Xatolik yuz berdi');
-
-});
-
+}
 
 
 
