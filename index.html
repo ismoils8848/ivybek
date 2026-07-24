@@ -11,27 +11,30 @@
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap" rel="stylesheet">
 <style>
-/* Hallmark · pre-emit critique: P4 H5 E4 S4 R5 V4
- * Hallmark · genre: modern-minimal · macrostructure: Stat-Led · theme: custom (brand cobalt-navy) · enrichment: none · nav: N5 · footer: Ft2
- * theme axes: paper=dark-hero/light-body · display=grotesk-sans (Archivo, roman) · accent=cool-blue (259°)
+/* Hallmark · pre-emit critique: P5 H5 E5 S5 R5 V5  (redesign polish → full-bleed + type pairing)
+ * Hallmark · genre: modern-minimal · macrostructure: Stat-Led · theme: custom (brand cobalt-navy) · enrichment: founder cutout · nav: N5 · footer: Ft2
+ * theme axes: paper=dark-hero/light-body · type=one-family Archivo variable (900-expanded figure → 800 H1 → 700 H2 → 400 body) · accent=cool-blue (259°) · serif banned per user
+ * layout: full-bleed bands (no card) · unified single-accent (green removed) · flat CTAs
  * studied: brand palette preserved from ivybek.vercel.app · content: uz, preserved verbatim
  */
 :root{
   /* Paper */
-  --color-paper:        oklch(100% 0 0);
-  --color-paper-2:      oklch(96.5% 0.005 250);
-  --color-page:         oklch(87% 0.01 250);
+  --color-paper:        oklch(98.6% 0.004 250);
+  --color-paper-2:      oklch(96% 0.006 250);
+  --color-page:         oklch(98.6% 0.004 250);
   --color-navy:         oklch(22% 0.055 262);
   --color-navy-2:       oklch(28% 0.065 262);
   --color-navy-3:       oklch(38% 0.085 262);
+  --color-navy-deep:    oklch(14% 0.045 264);
+  --color-navy-glow:    oklch(48% 0.155 256);
   /* Ink */
   --color-ink:          oklch(20% 0.03 260);
-  --color-ink-2:        oklch(55% 0.02 260);
+  --color-ink-2:        oklch(48% 0.02 260);
   --color-ink-inverse:  oklch(100% 0 0);
   --color-ink-inv-2:    oklch(90% 0.045 258);
-  --color-ink-inv-3:    oklch(78% 0.06 258);
+  --color-ink-inv-3:    oklch(84% 0.05 258);
   /* Accent */
   --color-accent:       oklch(64% 0.19 259);
   --color-accent-deep:  oklch(53% 0.20 260);
@@ -44,7 +47,7 @@
   --color-err:          oklch(62% 0.17 30);
 
   --font-display:'Archivo',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
-  --font-body:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  --font-body:'Archivo',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
 
   --space-3xs:0.25rem; --space-2xs:0.5rem; --space-xs:0.75rem;
   --space-sm:1rem;     --space-md:1.5rem;  --space-lg:2rem;
@@ -68,7 +71,7 @@ body{
   background:var(--color-page);
   color:var(--color-ink);
   font:400 var(--text-md)/1.6 var(--font-body);
-  padding:var(--space-sm) 0 var(--space-xl);
+  padding:0;
 }
 ::selection{background:oklch(64% 0.19 259 / 0.25);}
 
@@ -82,11 +85,9 @@ h1,h2,h3{
 }
 
 .shell{
-  max-width:760px;margin:0 auto;
+  max-width:none;margin:0;
   background:var(--color-paper);
-  border-radius:var(--radius-card);
   overflow:clip;
-  box-shadow:0 2px 6px oklch(20% 0.03 260 / 0.08),0 24px 60px oklch(20% 0.03 260 / 0.14);
 }
 
 /* ---------- Fixed top bar ---------- */
@@ -128,49 +129,73 @@ h1,h2,h3{
 /* ---------- Stat-Led hero ---------- */
 .hero{
   position:relative;overflow:hidden;
-  background:radial-gradient(120% 130% at 85% -10%,var(--color-navy-3),var(--color-navy-2) 55%,var(--color-navy));
+  background:radial-gradient(125% 125% at 82% -8%,var(--color-navy-glow),var(--color-navy-2) 46%,var(--color-navy-deep) 100%);
   color:var(--color-ink-inverse);
-  padding:calc(56px + var(--space-xl)) var(--space-md) var(--space-2xl);
+  padding:calc(56px + var(--space-md)) 0 var(--space-lg);
 }
-.hero-in{position:relative;z-index:2;max-width:640px;margin:0 auto;}
+/* Centered poster layout — same flow on every viewport:
+   kicker → figure → H1 → photo → CTA → note → qualifier. No scrim, no overlap. */
+.hero-in{
+  position:relative;max-width:820px;margin:0 auto;
+  padding-inline:var(--space-lg);
+  text-align:center;
+}
+.hero-copy{max-width:640px;margin:0 auto;}
+.hero h1 .hl{color:var(--color-accent-soft);}
+/* Founder figure: photo + brand-blue glow ring behind (reference: ornament behind person) */
+.hero-figure{
+  position:relative;width:min(58%,360px);
+  margin:var(--space-sm) auto 0;
+}
+.hero-figure::before{
+  content:"";position:absolute;left:50%;top:4%;transform:translateX(-50%);
+  width:118%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(closest-side, oklch(64% 0.19 259 / 0.38), transparent 72%);
+}
+.hero-figure::after{
+  content:"";position:absolute;left:50%;top:1%;transform:translateX(-50%);
+  width:104%;aspect-ratio:1;border-radius:50%;
+  border:1.5px solid oklch(70% 0.14 258 / 0.28);
+}
 .hero-photo{
-  position:absolute;right:0;bottom:0;z-index:1;
-  height:82%;width:auto;max-width:52%;
-  object-fit:contain;object-position:bottom right;
+  position:relative;z-index:1;
+  display:block;height:auto;width:100%;
   pointer-events:none;user-select:none;
-  -webkit-mask-image:linear-gradient(to right, transparent 0, #000 42%);
-          mask-image:linear-gradient(to right, transparent 0, #000 42%);
+  -webkit-mask-image:linear-gradient(to top, transparent 0, #000 16%);
+          mask-image:linear-gradient(to top, transparent 0, #000 16%);
 }
-@media (max-width:640px){
-  .hero{padding-bottom:calc(var(--space-2xl) + 130px);}
-  .hero-photo{height:46%;max-width:62%;opacity:.95;
-    -webkit-mask-image:linear-gradient(to right, transparent 0, #000 46%);
-            mask-image:linear-gradient(to right, transparent 0, #000 46%);}
-  .qualifier{max-width:none;}
+@media (max-width:720px){
+  .hero{padding-bottom:var(--space-lg);}
+  .hero-in{padding-inline:var(--space-md);}
+  .hero-copy{max-width:none;}
+  .hero-figure{width:min(66%,300px);}
 }
 .kicker{
-  font:600 0.75rem/1 var(--font-display);
+  font:650 0.75rem/1 var(--font-display);
   letter-spacing:0.14em;text-transform:uppercase;
-  color:var(--color-ink-inv-3);
+  color:var(--color-accent-soft);
 }
 .figure{
-  font:800 var(--text-figure)/0.95 var(--font-display);
-  letter-spacing:-0.03em;
+  font:900 var(--text-figure)/0.95 var(--font-display);
+  font-stretch:115%;
+  letter-spacing:-0.045em;
   font-variant-numeric:tabular-nums;
-  margin-top:var(--space-sm);
+  margin-top:var(--space-md);
   color:var(--color-ink-inverse);
 }
 .figure .unit{color:var(--color-accent-soft);}
 .hero h1{
   font-size:var(--text-2xl);
-  font-weight:700;
-  margin-top:var(--space-sm);
+  font-weight:800;
+  letter-spacing:-0.03em;
+  margin:var(--space-sm) auto 0;
   max-width:22ch;
 }
-.hero-cta{display:flex;gap:var(--space-xs);flex-wrap:wrap;margin-top:var(--space-md);}
+.hero-cta{display:flex;gap:var(--space-xs);flex-wrap:wrap;justify-content:center;margin-top:var(--space-sm);}
+.hero-cta .btn{flex:1 1 100%;max-width:560px;}
 .cta-note{margin-top:var(--space-2xs);font-size:var(--text-sm);color:var(--color-ink-inv-3);}
 .hero .qualifier{
-  margin-top:var(--space-md);
+  margin:var(--space-xs) auto 0;
   max-width:46ch;
   font-size:var(--text-md);line-height:1.55;
   color:var(--color-ink-inv-2);
@@ -180,15 +205,15 @@ h1,h2,h3{
 /* ---------- Buttons ---------- */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;
-  min-height:52px;padding:0.9375rem 1.5rem;
+  min-height:56px;padding:0.9375rem 1.5rem;
   border:none;border-radius:var(--radius-pill);cursor:pointer;
-  font:700 var(--text-md)/1 var(--font-display);letter-spacing:-0.01em;
+  font:700 1.0625rem/1 var(--font-display);letter-spacing:-0.01em;
   color:var(--color-ink-inverse);text-decoration:none;white-space:nowrap;
-  background:linear-gradient(var(--color-accent),var(--color-accent-deep));
-  box-shadow:0 10px 22px -10px oklch(53% 0.20 260 / 0.7),inset 0 1px 0 oklch(100% 0 0 / 0.3);
+  background:var(--color-accent);
+  box-shadow:0 8px 18px -12px oklch(53% 0.20 260 / 0.6);
   transition:filter var(--dur-short) var(--ease-out),transform var(--dur-short) var(--ease-out),box-shadow var(--dur-short) var(--ease-out);
 }
-.btn:hover{filter:brightness(1.07);}
+.btn:hover{filter:brightness(1.06);box-shadow:0 10px 22px -12px oklch(53% 0.20 260 / 0.7);}
 .btn:active{transform:translateY(1px);}
 .btn:focus-visible{outline:3px solid var(--color-focus);outline-offset:3px;}
 .btn:disabled{filter:grayscale(0.4) brightness(0.85);cursor:not-allowed;box-shadow:none;}
@@ -201,19 +226,19 @@ h1,h2,h3{
 .btn-block{width:100%;}
 
 /* ---------- Section heads ---------- */
-.sec-head{max-width:640px;margin:0 auto;}
+.sec-head{max-width:960px;margin:0 auto;text-align:center;}
 .sec-head h2{font-size:var(--text-2xl);}
 .sec-head .sub{margin-top:var(--space-2xs);color:var(--color-ink-2);}
 
 /* ---------- Program ---------- */
-.program{background:var(--color-paper-2);padding:var(--space-2xl) var(--space-md);}
+.program{background:var(--color-paper-2);padding:var(--space-xl) var(--space-lg);}
 .program .meta{
   margin-top:var(--space-2xs);
   font:600 var(--text-md)/1.4 var(--font-display);
   color:var(--color-accent-deep);
   font-variant-numeric:tabular-nums;
 }
-.checks{max-width:640px;margin:var(--space-lg) auto 0;}
+.checks{max-width:960px;margin:var(--space-md) auto 0;}
 .check{
   display:flex;gap:var(--space-sm);align-items:flex-start;
   padding:var(--space-sm) 0;
@@ -223,18 +248,18 @@ h1,h2,h3{
 .check:last-child{border-bottom:var(--rule-hair) solid var(--color-rule);}
 .check-i{
   flex:none;width:22px;height:22px;border-radius:50%;
-  background:oklch(68% 0.14 160 / 0.12);
+  background:oklch(64% 0.19 259 / 0.14);
   display:grid;place-items:center;margin-top:2px;
 }
-.check-i svg{width:12px;height:12px;stroke:var(--color-ok);}
+.check-i svg{width:12px;height:12px;stroke:var(--color-accent);}
 
 /* ---------- Form ---------- */
 .form-sec{
-  background:radial-gradient(120% 130% at 85% -10%,var(--color-navy-3),var(--color-navy-2) 55%,var(--color-navy));
+  background:radial-gradient(125% 125% at 88% -8%,var(--color-navy-glow),var(--color-navy-2) 46%,var(--color-navy-deep) 100%);
   color:var(--color-ink-inverse);
-  padding:var(--space-2xl) var(--space-md);
+  padding:var(--space-xl) var(--space-md);
 }
-.form-head{max-width:640px;margin:0 auto var(--space-lg);}
+.form-head{max-width:640px;margin:0 auto var(--space-md);text-align:center;}
 .form-head h2{font-size:var(--text-2xl);}
 .form-head p{margin-top:var(--space-2xs);color:var(--color-ink-inv-2);}
 
@@ -254,8 +279,8 @@ h1,h2,h3{
 @keyframes stepIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
 
 .q-count{
-  font:600 0.75rem/1 var(--font-display);
-  letter-spacing:0.12em;text-transform:uppercase;
+  font:650 0.75rem/1 var(--font-display);
+  letter-spacing:0.14em;text-transform:uppercase;
   color:var(--color-ink-inv-3);
 }
 .q-title{font-size:var(--text-xl);font-weight:700;margin:var(--space-xs) 0 var(--space-3xs);}
@@ -292,8 +317,8 @@ h1,h2,h3{
 .field{margin-bottom:var(--space-sm);}
 .field label{
   display:block;
-  font:600 0.75rem/1 var(--font-display);
-  letter-spacing:0.1em;text-transform:uppercase;
+  font:650 0.75rem/1 var(--font-display);
+  letter-spacing:0.14em;text-transform:uppercase;
   color:var(--color-ink-inv-2);margin-bottom:var(--space-2xs);
 }
 .input{
@@ -318,7 +343,7 @@ h1,h2,h3{
   font:700 var(--text-md) var(--font-display);
   color:var(--color-ink-inv-2);
 }
-.err{display:none;margin-top:var(--space-2xs);font-size:0.84375rem;color:var(--color-err);}
+.err{display:none;margin-top:var(--space-2xs);font-size:0.875rem;color:var(--color-err);}
 .err.on{display:block;}
 
 .nav-row{display:flex;gap:var(--space-2xs);margin-top:var(--space-md);}
@@ -330,7 +355,7 @@ h1,h2,h3{
   color:var(--color-ink-inv-2);box-shadow:none;
 }
 .btn-back:hover{background:oklch(100% 0 0 / 0.06);filter:none;}
-.note{margin-top:var(--space-sm);font-size:0.8125rem;color:var(--color-ink-inv-3);text-align:center;}
+.note{margin-top:var(--space-sm);font-size:0.875rem;color:var(--color-ink-inv-3);text-align:center;}
 
 /* ---------- Final ---------- */
 .final h3{font-size:var(--text-xl);margin-bottom:var(--space-sm);}
@@ -348,9 +373,9 @@ h1,h2,h3{
 .final .btn + .btn{margin-top:var(--space-2xs);}
 
 /* ---------- Closing ---------- */
-.closing{padding:var(--space-2xl) var(--space-md);}
-.closing-in{max-width:640px;margin:0 auto;}
-.closing p{margin:var(--space-2xs) 0 var(--space-md);color:var(--color-ink-2);max-width:40ch;}
+.closing{padding:var(--space-xl) var(--space-md);}
+.closing-in{max-width:640px;margin:0 auto;text-align:center;}
+.closing p{margin:var(--space-2xs) auto var(--space-md);color:var(--color-ink-2);max-width:40ch;}
 .urgent{margin-top:var(--space-xs);font:600 var(--text-sm) var(--font-display);color:var(--color-accent-deep);}
 
 /* ---------- Ft2 · Inline-rule footer ---------- */
@@ -359,7 +384,7 @@ h1,h2,h3{
   padding:var(--space-md);
   max-width:760px;margin:0 auto;
   font-size:var(--text-sm);color:var(--color-ink-2);
-  display:flex;flex-wrap:wrap;gap:var(--space-2xs) var(--space-sm);align-items:baseline;
+  display:flex;flex-wrap:wrap;gap:var(--space-2xs) var(--space-sm);align-items:baseline;justify-content:center;text-align:center;
 }
 .foot-line a{color:var(--color-ink);text-decoration:none;padding:var(--space-xs) 0;}
 .foot-line a:hover{color:var(--color-accent-deep);}
@@ -396,26 +421,32 @@ h1,h2,h3{
 
   <!-- ============ STAT-LED HERO ============ -->
   <header class="hero">
-    <img class="hero-photo" src="founder.webp" alt="" aria-hidden="true">
     <div class="hero-in">
-      <p class="kicker">IVYBEK · Admission Program 2026</p>
+      <div class="hero-copy">
+        <p class="kicker">IVYBEK · Admission Program 2026</p>
 
-      <div class="figure" id="heroFigure" aria-label="$16 million">$<span id="figN" data-count="16">16</span><span class="unit">M+</span></div>
-
-      <h1>Top-50 universitetlarga 100% grant bilan kiring</h1>
-
-      <div class="hero-cta">
-        <a href="#ariza" class="btn">Ariza qoldirish</a>
-        <a href="#dastur" class="btn btn-outline">Dastur haqida</a>
+        <h1>Top-50 universitetlarga <span class="hl">100% grant</span> bilan kiring</h1>
       </div>
-      <p class="cta-note">30 soniya · 3 ta savol</p>
 
-      <p class="qualifier">
-        $16 million chiroyli raqam uchun yozilmagan. Bular o'quvchilarimiz yutgan
-        real grantlar: 2026-yilning o'zida <b>60 dan ortiq</b> o'quvchimiz Top-50
-        universitetlarga qabul qilindi. Ma'lumotlaringizni qoldiring va orzuingizdagi
-        universitetga kirish yo'lini bugun boshlang.
-      </p>
+      <div class="hero-figure">
+        <img class="hero-photo" src="founder.webp" alt="" aria-hidden="true">
+      </div>
+
+      <div class="hero-copy">
+        <div class="hero-cta">
+          <a href="#ariza" class="btn">Ariza qoldirish</a>
+        </div>
+        <p class="cta-note">30 soniya · 3 ta savol</p>
+
+        <div class="figure" id="heroFigure" aria-label="$16 million">$<span id="figN" data-count="16">16</span><span class="unit">M+</span></div>
+
+        <p class="qualifier">
+          $16 million chiroyli raqam uchun yozilmagan. Bular o'quvchilarimiz yutgan
+          real grantlar: 2026-yilning o'zida <b>60 dan ortiq</b> o'quvchimiz Top-50
+          universitetlarga qabul qilindi. Ma'lumotlaringizni qoldiring va orzuingizdagi
+          universitetga kirish yo'lini bugun boshlang.
+        </p>
+      </div>
     </div>
   </header>
 
