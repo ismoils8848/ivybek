@@ -260,6 +260,7 @@ h1,h2,h3{
   padding:var(--space-xl) var(--space-md);
 }
 .form-head{max-width:640px;margin:0 auto var(--space-md);text-align:center;}
+.form-head b{color:var(--color-accent-soft);font-weight:700;}
 .form-head h2{font-size:var(--text-2xl);}
 .form-head p{margin-top:var(--space-2xs);color:var(--color-ink-inv-2);}
 
@@ -474,8 +475,8 @@ h1,h2,h3{
   <!-- ============ FORM ============ -->
   <section class="form-sec" id="ariza">
     <div class="form-head">
-      <h2>Ariza qoldiring</h2>
-      <p>3 ta savolga javob bering — sizning holatingizga mos rejani tayyorlaymiz.</p>
+      <h2>Ma'lumotlaringizni qoldiring</h2>
+      <p>Menejerlarimiz siz bilan <b>bepul konsultatsiya</b> o'tkazishadi.</p>
     </div>
 
     <div class="fcard">
@@ -572,8 +573,43 @@ function esc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt
 function render(){
   progBar.style.width = Math.round((step / TOTAL_STEPS) * 100) + '%';
   if(step < QUESTIONS.length) renderQuestion(QUESTIONS[step]);
-  else renderContact();
+  else{
+    const dq = disqualify();
+    if(dq) renderNotFit(dq); else renderContact();
+  }
   host.classList.remove('on'); void host.offsetWidth; host.classList.add('on');
+}
+
+/* Lead filtri: mos kelmaydiganlar kontakt qadamiga o'tmaydi.
+   IELTS bandi bo'lmasa (bilmayman / hali o'qiyapman) — faqat SAT 1200+ qutqaradi. */
+function disqualify(){
+  if(answers.sinf === '1-8 sinf') return 'sinf';
+  const noIelts = answers.ingliz === 'Ingliz tilini uncha yaxshi bilmayman' ||
+                  answers.ingliz === "Hali topshirmaganman, lekin o'qiyapman";
+  if(noIelts && answers.sat !== 'Ha, 1200 va undan yuqori') return 'tayyorgarlik';
+  return null;
+}
+
+function renderNotFit(reason){
+  post(payload('screened'));   // javoblar jadvalga tushadi, amoCRM'ga emas
+  progBar.style.width = '100%';
+  const m = reason === 'sinf'
+    ? { t:'Hozircha siz uchun erta',
+        p:"Dasturimiz 9–11-sinf o'quvchilari va maktab bitiruvchilari uchun mo'ljallangan. Vaqti kelganda sizni kutamiz — Instagram'da kuzatib boring!" }
+    : { t:'Hozircha dastur talablariga mos kelmaysiz',
+        p:"Dasturga IELTS 6.0+ yoki SAT 1200+ natija kerak bo'ladi. Tayyorlanib, keyinroq qayta ariza qoldiring — Instagram'da foydali materiallar ulashamiz." };
+  host.innerHTML = `
+    <div class="final">
+      <h3>${m.t}</h3>
+      <p>${m.p}</p>
+      <a class="btn btn-block" href="https://www.instagram.com/ivybek_com/" target="_blank" rel="noopener">Instagram'da kuzatish</a>
+      <div class="nav-row">
+        <button type="button" class="btn btn-back" id="backBtn" aria-label="Orqaga">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById('backBtn').addEventListener('click', prev);
 }
 
 function renderQuestion(q){
@@ -797,18 +833,9 @@ function showFinal(){
   const title = document.getElementById('finalTitle');
   const body = document.getElementById('finalBody');
 
-  const early = {'1-8 sinf':"3 yildan ko'p", '9-sinf':'2 yil', '10-sinf':'1,5 yil'};
-  title.textContent = 'Rahmat, ' + (answers.name || '') + '!';
-  if(early[answers.sinf]){
-    body.innerHTML = `
-      <p class="lead">Arizangiz qabul qilindi.</p>
-      <p>Oldingizda <b>${early[answers.sinf]}</b> vaqt bor — bu juda yaxshi. Tez orada
-         Telegramda yozib, sizga mos rejani tuzamiz.</p>`;
-  }else{
-    body.innerHTML = `
-      <p class="lead">Arizangiz qabul qilindi.</p>
-      <p>Tez orada Telegramda bog'lanamiz va nima qilish kerakligini aniq aytamiz.</p>`;
-  }
+  title.textContent = 'Arizangiz qabul qilindi';
+  body.innerHTML = `
+    <p class="lead">Tez orada menejerlarimiz siz bilan bog'lanishadi.</p>`;
 
   host.classList.remove('on');
   finalStep.classList.add('on');
