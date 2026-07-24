@@ -593,15 +593,10 @@ function disqualify(){
 function renderNotFit(reason){
   post(payload('screened'));   // javoblar jadvalga tushadi, amoCRM'ga emas
   progBar.style.width = '100%';
-  const m = reason === 'sinf'
-    ? { t:'Hozircha siz uchun erta',
-        p:"Dasturimiz 9–11-sinf o'quvchilari va maktab bitiruvchilari uchun mo'ljallangan. Vaqti kelganda sizni kutamiz — Instagram'da kuzatib boring!" }
-    : { t:'Hozircha dastur talablariga mos kelmaysiz',
-        p:"Dasturga IELTS 6.0+ yoki SAT 1200+ natija kerak bo'ladi. Tayyorlanib, keyinroq qayta ariza qoldiring — Instagram'da foydali materiallar ulashamiz." };
   host.innerHTML = `
     <div class="final">
-      <h3>${m.t}</h3>
-      <p>${m.p}</p>
+      <h3>Afsuski, ro'yxatdan o'ta olmadingiz</h3>
+      <p>Admission dasturimizga 9-sinfdan boshlab, IELTS 6.5+ yoki SAT 1200+ natija bilan qabul qilamiz. Tayyor bo'lganingizda qayta ariza qoldiring — Instagram'da kuzatib boring!</p>
       <a class="btn btn-block" href="https://www.instagram.com/ivybek_com/" target="_blank" rel="noopener">Instagram'da kuzatish</a>
       <div class="nav-row">
         <button type="button" class="btn btn-back" id="backBtn" aria-label="Orqaga">
