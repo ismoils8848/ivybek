@@ -11,7 +11,9 @@
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="founder.webp" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap" rel="stylesheet"></noscript>
 
 <!-- Meta Pixel Code -->
 <script>
@@ -202,6 +204,7 @@ h1,h2,h3{
   color:var(--color-ink-inverse);
 }
 .figure .unit{color:var(--color-accent-soft);}
+.figure #figN{display:inline-block;min-width:2ch;text-align:right;}  /* raqam sanalayotganda kenglik o'zgarmasin (CLS) */
 .hero h1{
   font-size:var(--text-2xl);
   font-weight:800;
@@ -432,7 +435,7 @@ h1,h2,h3{
 
 <nav class="nav-pill" aria-label="Asosiy">
   <a class="wordmark" href="#top" aria-label="ivybek">
-    <img src="logo.webp" alt="ivybek">
+    <img src="logo.webp" width="255" height="110" alt="ivybek">
   </a>
 </nav>
 
@@ -448,7 +451,7 @@ h1,h2,h3{
       </div>
 
       <div class="hero-figure">
-        <img class="hero-photo" src="founder.webp" alt="" aria-hidden="true">
+        <img class="hero-photo" src="founder.webp" width="560" height="760" fetchpriority="high" decoding="async" alt="" aria-hidden="true">
       </div>
 
       <div class="hero-copy">
@@ -866,14 +869,15 @@ function showFinal(){
   const el = document.getElementById('figN');
   if(!el || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const target = +el.dataset.count;
+  const from = 10;                       // har doim 2 xonali — kenglik o'zgarmaydi (CLS)
   let t0 = null;
   function frame(t){
     if(!t0) t0 = t;
     const p = Math.min((t - t0) / 500, 1);
-    el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+    el.textContent = Math.round(from + (target - from) * (1 - Math.pow(1 - p, 3)));
     if(p < 1) requestAnimationFrame(frame);
   }
-  el.textContent = '0';
+  el.textContent = String(from);
   requestAnimationFrame(frame);
 })();
 
