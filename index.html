@@ -12,6 +12,24 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap" rel="stylesheet">
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2283622125504650');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=2283622125504650&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 <style>
 /* Hallmark · pre-emit critique: P5 H5 E5 S5 R5 V5  (redesign polish → full-bleed + type pairing)
  * Hallmark · genre: modern-minimal · macrostructure: Stat-Led · theme: custom (brand cobalt-navy) · enrichment: founder cutout · nav: N5 · footer: Ft2
@@ -632,6 +650,8 @@ function renderQuestion(q){
 
   host.querySelectorAll('.opt').forEach(btn => {
     btn.addEventListener('click', () => {
+      if(!window.__formStarted){ window.__formStarted = 1;
+        if(typeof fbq === 'function') fbq('track', 'InitiateCheckout'); }   // Meta: forma boshlandi
       const v = btn.dataset.v;
       if(q.multi){
         let arr = answers[q.id] || [];
@@ -816,6 +836,7 @@ function submit(){
   btn.disabled = true;
   btn.textContent = 'Yuborilmoqda...';
 
+  if(typeof fbq === 'function') fbq('track', 'Lead');   // Meta: ariza yuborildi
   post(payload('lead')).then(showFinal);
   setTimeout(showFinal, 2500);
 }
