@@ -584,10 +584,11 @@ const QUESTIONS = [
     opts:['1-8 sinf','9-sinf','10-sinf','11-sinf','Maktabni tugatganman'] },
 
   { id:'ingliz', title:'Ingliz tili darajangiz qanday?',
-    opts:['IELTS topshirganman: 7.0 va undan yuqori',
-          'IELTS topshirganman: 6.0\u20136.5',
-          "Hali topshirmaganman, lekin o'qiyapman",
-          'Ingliz tilini uncha yaxshi bilmayman'] },
+    opts:['Ingliz tilini uncha yaxshi bilmayman',
+          'IELTS 6.0 yoki undan past',
+          'IELTS 6.5',
+          'IELTS 7.0',
+          'IELTS 7.5\u20138.0+'] },
 
   { id:'sat', title:'SAT topshirganmisiz?',
     opts:['Ha, 1200 va undan yuqori','Ha, 1150 dan past',"Yo'q, hali topshirmaganman"] }
@@ -631,11 +632,11 @@ function render(){
 }
 
 /* Lead filtri: mos kelmaydiganlar kontakt qadamiga o'tmaydi.
-   IELTS bandi bo'lmasa (bilmayman / hali o'qiyapman) - faqat SAT 1200+ qutqaradi. */
+   IELTS past bo'lsa (bilmayman / 6.0 va past) - faqat SAT 1200+ qutqaradi. */
 function disqualify(){
   if(answers.sinf === '1-8 sinf') return 'sinf';
   const noIelts = answers.ingliz === 'Ingliz tilini uncha yaxshi bilmayman' ||
-                  answers.ingliz === "Hali topshirmaganman, lekin o'qiyapman";
+                  answers.ingliz === 'IELTS 6.0 yoki undan past';
   if(noIelts && answers.sat !== 'Ha, 1200 va undan yuqori') return 'tayyorgarlik';
   return null;
 }
@@ -799,9 +800,10 @@ function grade(){
   else score += 14;                                        // 1-8 sinf - hali erta, NURTURE
 
   const e = answers.ingliz;                                // 0..35
-  if(e === 'IELTS topshirganman: 7.0 va undan yuqori') score += 35;
-  else if(e === 'IELTS topshirganman: 6.0\u20136.5') score += 26;
-  else if(e === "Hali topshirmaganman, lekin o'qiyapman") score += 14;
+  if(e === 'IELTS 7.5\u20138.0+') score += 35;
+  else if(e === 'IELTS 7.0') score += 32;
+  else if(e === 'IELTS 6.5') score += 26;
+  else if(e === 'IELTS 6.0 yoki undan past') score += 14;
 
   if(answers.sat === 'Ha, 1200 va undan yuqori') score += 25;   // 0..25
   else if(answers.sat === 'Ha, 1150 dan past') score += 12;
