@@ -7,6 +7,7 @@
     { "source": "/admissions-tg",     "destination": "/?utm_source=tg&utm_medium=bio",       "permanent": false },
     { "source": "/admissions-tgads",  "destination": "/?utm_source=tg_ads&utm_medium=cpc",   "permanent": false },
     { "source": "/admissions-google", "destination": "/?utm_source=google&utm_medium=cpc",   "permanent": false },
-    { "source": "/admissions-eng",    "destination": "/en.html?utm_source=tg_eng&utm_medium=bio", "permanent": false }
+    { "source": "/en",                "destination": "/en.html?utm_source=tg&utm_medium=bio", "permanent": false },
+    { "source": "/admissions-eng",    "destination": "/en.html?utm_source=tg&utm_medium=bio", "permanent": false }
   ]
 }
