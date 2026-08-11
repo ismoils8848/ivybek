@@ -673,10 +673,23 @@ const sessionId = 's_' + Date.now().toString(36) + Math.random().toString(36).sl
 
 const utm = (() => {
   const p = new URLSearchParams(location.search); const o = {};
-  ['utm_source','utm_medium','utm_campaign','utm_content','gclid','fbclid','ttclid'].forEach(k => { if(p.get(k)) o[k] = p.get(k); });
+  ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','fbclid','ttclid'].forEach(k => { if(p.get(k)) o[k] = p.get(k); });
   if(!o.utm_source && document.referrer) o.referrer = document.referrer;
   return o;
 })();
+
+/* Meta browser identifiers. The pixel sets _fbp / _fbc itself, but not instantly —
+   so we read them at submit time, not on page load. These two values tie the
+   server-side CAPI event to this exact person and raise Event Match Quality. */
+function metaIds(){
+  const o = {};
+  const fbp = document.cookie.match(/(?:^|;\s*)_fbp=([^;]+)/);
+  const fbc = document.cookie.match(/(?:^|;\s*)_fbc=([^;]+)/);
+  if(fbp) o.fbp = fbp[1];
+  if(fbc) o.fbc = fbc[1];
+  else if(utm.fbclid) o.fbc = 'fb.1.' + Date.now() + '.' + utm.fbclid;
+  return o;
+}
 
 const host = document.getElementById('stepHost');
 const finalStep = document.getElementById('stepFinal');
@@ -900,7 +913,8 @@ function payload(type){
     type, sessionId, step: step + 1,
     ...answers,
     score: g.score, tier: g.tier, tags: g.tags.join(' | '),
-    ...utm, page: location.href, ts: new Date().toISOString()
+    ...utm, ...metaIds(), ua: navigator.userAgent,
+    page: location.href, ts: new Date().toISOString()
   };
 }
 
@@ -947,7 +961,18 @@ function submit(){
   btn.disabled = true;
   btn.textContent = 'Sending...';
 
-  if(typeof fbq === 'function') fbq('track', 'Lead');            // Meta: ariza yuborildi
+  if(typeof fbq === 'function'){
+    /* Advanced Matching: hand the pixel the phone and first name from the form.
+       The pixel hashes them in the browser — nothing leaves in the clear. */
+    const am = { ph: digits, country: 'uz' };
+    const fn = answers.name.split(/\s+/)[0].toLowerCase();
+    if(fn) am.fn = fn;
+    fbq('init', '2283622125504650', am);
+
+    /* eventID = sessionId. Apps Script sends the same Lead from the server (CAPI)
+       with this id, so Meta counts one event, not two. */
+    fbq('track', 'Lead', {}, { eventID: sessionId });
+  }
   if(typeof tgp === 'function') tgp('event', '4HGABMb6-Ix8DtlHR'); // Telegram Ads: Lead
   post(payload('lead')).then(showFinal);
   setTimeout(showFinal, 2500);
