@@ -12,7 +12,7 @@
 <link rel="preload" href="archivo.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="founder.webp" fetchpriority="high">
 
-<!-- Meta Pixel Code (kechiktirilgan yuklash - sahifa tezligiga xalaqit bermaydi) -->
+<!-- Meta Pixel + Telegram Pixel -->
 <script>
 !function(f,b){if(f.fbq)return;var n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -27,26 +27,10 @@ window.tgp = window.tgp || function(){
 tgp.queue = tgp.queue || [];
 tgp('init', '4HGABMb6');
 
-/* Piksellarni birinchi harakat (scroll/tap) yoki 5s dan keyin yuklaymiz - sahifa tezligiga ta'sir qilmaydi */
-(function(){
-  var done = false;
-  var evs = ['scroll','touchstart','pointerdown','keydown'];
-  var srcs = ['https://connect.facebook.net/en_US/fbevents.js',
-              'https://telegram.org/js/pixel.js'];
-  function go(){
-    if(done) return; done = true;
-    evs.forEach(function(e){ removeEventListener(e, go, {passive:true}); });
-    srcs.forEach(function(src){
-      var t = document.createElement('script');
-      t.async = true;
-      t.src = src;
-      document.head.appendChild(t);
-    });
-  }
-  evs.forEach(function(e){ addEventListener(e, go, {passive:true}); });
-  setTimeout(go, 5000);
-})();
 </script>
+<!-- Piksellar darhol yuklanadi: kechiktirilsa PageView / Landing view yo'qoladi va reklama o'lchovi buziladi -->
+<script async src="https://connect.facebook.net/en_US/fbevents.js"></script>
+<script async src="https://telegram.org/js/pixel.js"></script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=2283622125504650&ev=PageView&noscript=1"
 /></noscript>
@@ -679,7 +663,7 @@ const utm = (() => {
 })();
 
 /* Meta brauzer identifikatorlari.
-   _fbp / _fbc kukilarini piksel o'zi qo'yadi, lekin darhol emas — shuning uchun
+   _fbp / _fbc kukilarini piksel o'zi qo'yadi, lekin darhol emas - shuning uchun
    ularni sahifa yuklanganda emas, forma yuborilayotganda o'qiymiz.
    Bu ikki qiymat serverdan yuborilgan CAPI hodisasini aynan shu odam bilan
    bog'laydi va Event Match Quality'ni ko'taradi. */
@@ -776,6 +760,7 @@ function renderQuestion(q){
       <button type="button" class="btn" id="nextBtn">Davom etish</button>
     </div>`;
 
+  let advanced = false;
   host.querySelectorAll('.opt').forEach(btn => {
     btn.addEventListener('click', () => {
       if(!window.__formStarted){ window.__formStarted = 1;
@@ -792,7 +777,10 @@ function renderQuestion(q){
         answers[q.id] = v;
         host.querySelectorAll('.opt').forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
-        // avtomatik o'tish yo'q - foydalanuvchi "Davom etish" tugmasini bosadi
+        /* Avtomatik o'tish: bitta variant tanlansa keyingi savolga o'zi o'tadi.
+           Qo'shimcha bosish = qo'shimcha tark etish, shuning uchun tugma kutmaydi. */
+        if(!advanced){ advanced = true; setTimeout(next, 260); }
+        return;
       }
       document.getElementById('qErr').classList.remove('on');
     });
@@ -965,15 +953,17 @@ function submit(){
 
   if(typeof fbq === 'function'){
     /* Advanced Matching: formadagi telefon va ismni pikselga beramiz.
-       Qiymatlarni piksel brauzerning o'zida heshlaydi — ochiq holda hech qayerga ketmaydi. */
+       Qiymatlarni piksel brauzerning o'zida heshlaydi - ochiq holda hech qayerga ketmaydi. */
     const am = { ph: digits, country: 'uz' };
     const fn = answers.name.split(/\s+/)[0].toLowerCase();
     if(fn) am.fn = fn;
     fbq('init', '2283622125504650', am);
 
     /* eventID = sessionId. Apps Script xuddi shu id bilan serverdan (CAPI)
-       Lead yuboradi — Meta ikkalasini bitta hodisa deb hisoblaydi va lidni ikki marta sanamaydi. */
-    fbq('track', 'Lead', {}, { eventID: sessionId });
+       Lead yuboradi - Meta ikkalasini bitta hodisa deb hisoblaydi va lidni ikki marta sanamaydi. */
+    /* value = lid sifati (0..100). Meta hajm uchun emas, sifatli lid uchun optimallashtiradi. */
+    const gq = grade();
+    fbq('track', 'Lead', { value: gq.score, currency: 'USD' }, { eventID: sessionId });
   }
   if(typeof tgp === 'function') tgp('event', '4HGABMb6-Ix8DtlHR'); // Telegram Ads: Lead
   post(payload('lead')).then(showFinal);
